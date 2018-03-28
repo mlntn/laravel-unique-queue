@@ -1,4 +1,4 @@
-This redis queue driver works just like the standard Laravel redis queue driver, however, it prevents from the same job to be queued multiple times.
+This redis queue driver works just like the standard Laravel redis queue driver, however, it prevents the same job from being queued multiple times.
 
 ## INSTALLATION
 
