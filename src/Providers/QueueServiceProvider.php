@@ -2,34 +2,28 @@
 
 namespace Mlntn\Providers;
 
+use Illuminate\Support\ServiceProvider;
 use Mlntn\Queue\Connectors\RedisUniqueConnector;
+use Mlntn\Queue\Connectors\HorizonUniqueConnector;
 
-class QueueServiceProvider extends \Illuminate\Queue\QueueServiceProvider
+class QueueServiceProvider extends ServiceProvider
 {
 
     /**
-     * Register the connectors on the queue manager.
+     * Register any application services.
      *
-     * @param  \Illuminate\Queue\QueueManager  $manager
      * @return void
      */
-    public function registerConnectors($manager)
+    public function register()
     {
-        parent::registerConnectors($manager);
+        $this->app->resolving(QueueManager::class, function ($manager) {
+            $manager->addConnector('unique', function () {
+                if (defined('HORIZON_PATH')) {
+                    return new HorizonUniqueConnector($this->app['redis']);
+                }
 
-        $this->registerRedisUniqueConnector($manager);
-    }
-
-    /**
-     * Register the Redis unique queue connector.
-     *
-     * @param  \Illuminate\Queue\QueueManager  $manager
-     * @return void
-     */
-    protected function registerRedisUniqueConnector($manager)
-    {
-        $manager->addConnector('unique', function () {
-            return new RedisUniqueConnector($this->app['redis']);
+                return new RedisUniqueConnector($this->app['redis']);
+            });
         });
     }
 

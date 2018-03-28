@@ -2,6 +2,7 @@
 
 namespace Mlntn\Queue\Connectors;
 
+use Illuminate\Support\Arr;
 use Mlntn\Queue\RedisUniqueQueue;
 use Illuminate\Queue\Connectors\RedisConnector;
 
