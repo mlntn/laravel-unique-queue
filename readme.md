@@ -11,6 +11,27 @@ Create a new connection in *config/queue.php*
         'retry_after' => 90,
     ],
 
+Your jobs should use the UniquelyQueueable trait:
+
+    <?php
+    
+    namespace App\Jobs;
+    
+    use Illuminate\Bus\Queueable;
+    use Illuminate\Queue\SerializesModels;
+    use Illuminate\Queue\InteractsWithQueue;
+    use Illuminate\Contracts\Queue\ShouldQueue;
+    use Illuminate\Foundation\Bus\Dispatchable;
+    use Mlntn\Queue\Traits\UniquelyQueueable;
+    
+    class UniqueJob implements ShouldQueue {
+    
+        use Dispatchable, InteractsWithQueue, Queueable, UniquelyQueueable, SerializesModels;
+    
+        /* ... */
+    
+    }
+
 If the connection is not the default, you will need to specify the connection when dispatching the job:
 
     dispatch(new UniqueJob)->onConnection('my_unique_name');
