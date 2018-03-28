@@ -3,38 +3,10 @@
 namespace Mlntn\Queue\Connectors;
 
 use Mlntn\Queue\RedisUniqueQueue;
-use Illuminate\Contracts\Redis\Factory as Redis;
-use Illuminate\Queue\Connectors\ConnectorInterface;
+use Illuminate\Queue\Connectors\RedisConnector;
 
-class RedisUniqueConnector implements ConnectorInterface
+class RedisUniqueConnector extends RedisConnector
 {
-
-    /**
-     * The Redis database instance.
-     *
-     * @var \Illuminate\Contracts\Redis\Factory
-     */
-    protected $redis;
-
-    /**
-     * The connection name.
-     *
-     * @var string
-     */
-    protected $connection;
-
-    /**
-     * Create a new Redis queue connector instance.
-     *
-     * @param  \Illuminate\Contracts\Redis\Factory  $redis
-     * @param  string|null  $connection
-     * @return void
-     */
-    public function __construct(Redis $redis, $connection = null)
-    {
-        $this->redis = $redis;
-        $this->connection = $connection;
-    }
 
     /**
      * Establish a queue connection.

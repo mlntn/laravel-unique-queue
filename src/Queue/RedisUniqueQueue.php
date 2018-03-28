@@ -21,36 +21,18 @@ class RedisUniqueQueue extends RedisQueue
     {
         $connection = $this->getConnection();
 
+        $tracker = $this->getTrackerName($queue);
+
         $data = json_decode($payload, true);
 
-        $exists = $connection->hexists($this->getQueue($queue) . ':tracker', $data['uniqueIdentifier']);
+        $exists = $connection->hexists($tracker, $data['uniqueIdentifier']);
 
         if ($exists) {
             return null;
         }
 
-        $connection->hset($this->getQueue($queue) . ':tracker', $data['uniqueIdentifier'], $data['id']);
-
-        return parent::pushRaw($payload, $queue, $options);
-    }
-
-    /**
-     * Pop the next job off of the queue.
-     *
-     * @param  string  $queue
-     * @return \Illuminate\Contracts\Queue\Job|null
-     */
-    public function pop($queue = null)
-    {
-        $this->migrate($prefixed = $this->getQueue($queue));
-
-        list($job, $reserved) = $this->retrieveNextJob($prefixed);
-
-        if ($reserved) {
-            return new RedisJob(
-                $this->container, $this, $job,
-                $reserved, $this->connectionName, $queue ?: $this->default
-            );
+        if (parent::pushRaw($payload, $queue, $options)) {
+            $connection->hset($tracker, $data['uniqueIdentifier'], $data['id']);
         }
     }
 
@@ -78,11 +60,14 @@ class RedisUniqueQueue extends RedisQueue
     {
         parent::deleteReserved($queue, $job);
 
-        $this->getConnection()->zrem($this->getQueue($queue).':reserved', $job->getReservedJob());
-
         $data = json_decode($job->getRawBody(), true);
 
-        $this->getConnection()->hdel($this->getQueue($queue).':tracker', $data['uniqueIdentifier']);
+        $this->getConnection()->hdel($this->getTrackerName($queue), $data['uniqueIdentifier']);
+    }
+
+    protected function getTrackerName($queue)
+    {
+        return $this->getQueue($queue).':tracker';
     }
 
 }
