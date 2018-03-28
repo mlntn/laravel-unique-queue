@@ -14,5 +14,12 @@
     "minimum-stability": "stable",
     "autoload": {
         "classmap": ["src/"]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mlntn\\Providers\\QueueServiceProvider"
+            ]
+        }
     }
 }
