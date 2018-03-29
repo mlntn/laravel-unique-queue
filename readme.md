@@ -5,9 +5,9 @@ This redis queue driver works just like the standard Laravel redis queue driver,
 Create a new connection in *config/queue.php*
 
     'my_unique_name' => [
-        'driver' => 'unique',
-        'connection' => 'default',
-        'queue' => 'default',
+        'driver'      => 'unique',
+        'connection'  => 'default',
+        'queue'       => 'default',
         'retry_after' => 90,
     ],
 
@@ -41,11 +41,11 @@ If the connection is not the default, you will need to specify the connection wh
 Set up a worker configuration:
 
     'worker_name' => [
-        'connection' => 'unique',
-        'queue' => ['default'],
-        'balance' => 'auto',
-        'processes' => 16,
-        'tries' => 3,
+        'connection' => 'my_unique_name',
+        'queue'      => ['default'],
+        'balance'    => 'auto',
+        'processes'  => 16,
+        'tries'      => 3,
     ],
 
 ### Using artisan (via supervisor or another method)
