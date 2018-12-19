@@ -12,6 +12,12 @@
         }
     ],
     "minimum-stability": "stable",
+
+    "require": {
+        "php": "~7.1",
+        "illuminate/queue": "~5.7",
+        "illuminate/redis": "~5.7"
+    },
     "autoload": {
         "classmap": ["src/"]
     },
