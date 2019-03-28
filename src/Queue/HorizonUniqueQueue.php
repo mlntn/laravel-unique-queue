@@ -42,11 +42,11 @@ class HorizonUniqueQueue extends RedisQueue
      * @param  mixed  $job
      * @return array
      */
-    protected function createObjectPayload($job)
+    protected function createObjectPayload($job,$queue)
     {
         return array_merge([
             'uniqueIdentifier' => $job->getUniqueIdentifier(),
-        ], parent::createObjectPayload($job));
+        ], parent::createObjectPayload($job,$queue));
     }
 
     /**

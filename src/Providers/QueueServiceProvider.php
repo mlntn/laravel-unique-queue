@@ -16,7 +16,7 @@ class QueueServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->resolving(QueueManager::class, function ($manager) {
+        $this->app->resolving('queue', function ($manager) {
             $manager->addConnector('unique', function () {
                 if (defined('HORIZON_PATH')) {
                     return new HorizonUniqueConnector($this->app['redis']);
