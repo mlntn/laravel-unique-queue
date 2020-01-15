@@ -74,7 +74,7 @@ Since an Event simply encapsulates a Job, the event class should also use the Un
 
     class MyEvent {
 
-        public function __contstruct($entityId)
+        public function __construct($entityId)
         {
             $this->entityId;
         }
