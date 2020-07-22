@@ -45,7 +45,9 @@ class RedisUniqueQueue extends RedisQueue
     protected function createObjectPayload($job,$queue)
     {
         return array_merge([
-            'uniqueIdentifier' => $job->getUniqueIdentifier(),
+            'uniqueIdentifier' => isset($job->class)
+                ? (new $job->class)->getUniqueIdentifier()
+                : $job->getUniqueIdentifier(),
         ], parent::createObjectPayload($job,$queue));
     }
 
