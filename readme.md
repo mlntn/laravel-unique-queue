@@ -111,7 +111,7 @@ $app->register(Mlntn\Providers\LumenQueueServiceProvider::class);
 Set up a worker configuration:
 ```
     'worker_name' => [
-        'connection' => 'my_unique_name',
+        'connection' => 'my_unique_queue_connection_name',
         'queue'      => ['default'],
         'balance'    => 'auto',
         'processes'  => 16,
@@ -125,5 +125,5 @@ For more detailed information head over to https://github.com/illuminate/queue
 Specify the connection name used in `config/queue.php`
 
 ```
-php artisan queue:work my_unique_name
+php artisan queue:work my_unique_queue_connection_name
 ```
