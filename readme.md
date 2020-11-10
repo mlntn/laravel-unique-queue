@@ -1,3 +1,7 @@
+:warning: **DEPRECATED**:
+
+[Unique jobs have been implemented in laravel/framework](https://github.com/laravel/framework/releases/tag/v8.14.0). Please use the official implementation in Laravel 8.14.0 or higher. No further updates will be made to this repository and it will be archived in the future.
+
 # Laravel Unique Queue
 
 This redis queue driver works just like the standard Laravel redis queue driver, however, it prevents the same job from being queued multiple times.
